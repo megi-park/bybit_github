@@ -1,6 +1,8 @@
 import bybit
 import mkdntjr12_bybit1
 import balance as bl
+import time
+import math
 
 def order(signal,size):
     client = bybit.bybit(test=False, api_key=mkdntjr12_bybit1.api_key, api_secret=mkdntjr12_bybit1.secret_key)
@@ -23,14 +25,31 @@ def order(signal,size):
 
 # order("Buy",1)
 
-# client = bybit.bybit(test=False, api_key=mkdntjr12_bybit1.api_key, api_secret=mkdntjr12_bybit1.secret_key)
-# info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 거래되는 모든 거래쌍에 대한 현재 정보를 가져오는 것 keys 에 info 를 넣고 for i 문을 통해 안에 뭐가 들어있는지 확인이 가능함
+client = bybit.bybit(test=False, api_key=mkdntjr12_bybit1.api_key, api_secret=mkdntjr12_bybit1.secret_key)
+info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 거래되는 모든 거래쌍에 대한 현재 정보를 가져오는 것 keys 에 info 를 넣고 for i 문을 통해 안에 뭐가 들어있는지 확인이 가능함
+
+# now_info = info[0]["result"][0]
+
+# for i in now_info:
+#     print(i)
+# last_price = now_info["last_price"]
+# print(last_price)
 
 # cur_side = bl.position("BTCUSD")[0]
 # cur_size = bl.position("BTCUSD")[1]
 
 # print(cur_side,cur_size)
 # order("Buy",cur_size)
-avail_size = bl.balance("BTC")[1] #매도 이후 현재 가용자산
-print(avail_size*35736) #오더 사이즈를 avilable size * 현재 가격으로 정해야함
+
+
+while True:
+    time.sleep(1)
+    info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() 
+    now_info = info[0]["result"][0]
+    last_price = now_info["last_price"]
+    avail_size = bl.balance("BTC")[1] #매도 이후 현재 가용자산
+    print(avail_size)
+    print(last_price)
+    order_size = math.floor(avail_size * float(last_price))
+    print(order_size)
 # order("Sell",avail_size)
