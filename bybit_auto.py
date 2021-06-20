@@ -43,18 +43,19 @@ while True:
     cur_side = bl.position("BTCUSD")[0]
     cur_size = bl.position("BTCUSD")[1]
     print("현재 RSI 값 : {0}".format(cur_RSI))
-    if cur_RSI <=24:
+    if cur_RSI <=21:
         while True:
             time.sleep(5)
             new_time = df2.index[0]
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
+                new_RSI = cur_RSI
                 print("10분 아직 안 지남")
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
                 new_RSI = df2.iloc[0]["RSI"] #마지막 새로운 RSI 값을 기입
                 print("새로운 RSI 값 : {0}".format(new_RSI))
 
-            if new_RSI > 24:
+            if new_RSI > 21:
                 if cur_side == "Buy":
                     pass
                 elif cur_side == "Sell": #포지션 변경 , 자기자본율 100%
@@ -74,6 +75,7 @@ while True:
             time.sleep(5)
             new_time = df2.index[0]
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
+                new_RSI = cur_RSI
                 print("10분 아직 안 지남")
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
