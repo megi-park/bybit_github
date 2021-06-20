@@ -40,7 +40,7 @@ def balance(coin):
     # print("given_cash : {0}".format(given_cash))
     # service_cash = balance[0]["result"][coin]["service_cash"]
     # print("service_cash : {0}".format(service_cash))
-    print("현재 자산 : {0} , 가용 ".format(equity) + coin + " 잔고 : {0} , 지갑 잔고 : {1} , 미실현손익 : {2} , 실현손익 : {3} ".format(available_balance, wallet_balance, unrealised_pnl,realised_pnl))
+    # print("현재 자산 : {0} , 가용 ".format(equity) + coin + " 잔고 : {0} , 지갑 잔고 : {1} , 미실현손익 : {2} , 실현손익 : {3} ".format(available_balance, wallet_balance, unrealised_pnl,realised_pnl))
     return equity, available_balance, wallet_balance, unrealised_pnl, realised_pnl
 
 
@@ -62,6 +62,6 @@ def position(market):
     myposi_timestamp = dt.datetime.timestamp(yourdate) #주문일자와 현재의 차이를 확인하기 위한 것
     KST_myposi = yourdate.astimezone(timezone("Asia/Seoul")) #한국 시간으로 주문 시간
     time_delta = round(((now - round(myposi_timestamp))/3600),2) #주문시간과 현시간의 차이 - 시간으로 표기
-    print("시장 : {0} , 공매수/공매도 : {1} , 계약 수량 : {2} , 레버리지 : {3} , 격리(T)/교차(F) : {4} , 진입가 : {5} , 청산 예상가 : {6} ".format(market,myposi_side,myposi_size,myposi_leverage,myposi_iso,myposi_ent_price,myposi_liq_price))
-    print("진입 시간 : {0} , 보유 기간 : {1}시간 , 미실현 손익 : {2} , 실현 손익 : {3} ".format(KST_myposi,time_delta,myposi_unrealised_pnl,myposi_realised_pnl))
-    return myposi_side, myposi_size
+    # print("시장 : {0} , 공매수/공매도 : {1} , 계약 수량 : {2} , 레버리지 : {3} , 격리(T)/교차(F) : {4} , 진입가 : {5} , 청산 예상가 : {6} ".format(market,myposi_side,myposi_size,myposi_leverage,myposi_iso,myposi_ent_price,myposi_liq_price))
+    # print("진입 시간 : {0} , 보유 기간 : {1}시간 , 미실현 손익 : {2} , 실현 손익 : {3} ".format(KST_myposi,time_delta,myposi_unrealised_pnl,myposi_realised_pnl))
+    return market, myposi_side, myposi_size, myposi_leverage, myposi_iso, myposi_ent_price, myposi_liq_price, myposi_realised_pnl, myposi_unrealised_pnl, KST_myposi, time_delta
