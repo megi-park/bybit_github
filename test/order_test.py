@@ -42,14 +42,42 @@ info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 
 # order("Buy",cur_size)
 
 
+# while True:
+#     time.sleep(1)
+#     info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() 
+#     last_price = info[0]["result"][0]["last_price"]
+#     avail_size = bl.balance("BTC")[1] #매도 이후 현재 가용자산
+#     print(avail_size)
+#     print(last_price)
+#     order_size = avail_size * float(last_price) * 0.99
+#     print(order_size)
+#     order_size = math.floor(avail_size * math.floor(float(last_price))*0.99)
+#     print(order_size)
+
+# order("Buy",1)
+# my_order = order("Buy",1)
+# order_side = my_order[0]
+# order_type = my_order[1]
+# order_qt = my_order[2]
+# order_status = my_order[3]
+# order_time = my_order[4]
+
+# print(order_side) #str
+# print(order_type) #str
+# print(order_qt) #int
+# print(order_status) #str
+# print(order_time) #str
+
 while True:
-    time.sleep(1)
-    info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() 
-    now_info = info[0]["result"][0]
-    last_price = now_info["last_price"]
-    avail_size = bl.balance("BTC")[1] #매도 이후 현재 가용자산
-    print(avail_size)
-    print(last_price)
-    order_size = math.floor(avail_size * float(last_price))
-    print(order_size)
-# order("Sell",avail_size)
+    time.sleep(5)
+    my_order = order("Buy",1)
+    order_side = my_order[0]
+    order_type = my_order[1]
+    order_qt = my_order[2]
+    order_status = my_order[3]
+    order_time = my_order[4]
+    if order_status == "Created":
+        print("주문 완료 되었습니다.")
+        break
+    else:
+        pass
