@@ -69,7 +69,7 @@ while True:
     df2 = df2.sort_values(by="open_time" , ascending=False)
     cur_RSI = df2.iloc[0]["RSI"] #마지막 10분 봉 기준의 RSI 값을 저장
     cur_time = df2.index[0]
-    cur_info = bl.position("BTCUSD")
+    cur_info = bl.position("BTCUSD") #현재 내 포지션 정보를 cur_info 에 저장
     cur_side = cur_info[1]
     cur_size = cur_info[2]
     print("현재 RSI 값 : {0}".format(cur_RSI))
