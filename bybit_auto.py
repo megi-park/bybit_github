@@ -1,7 +1,7 @@
 import bybit
 import time
 import datetime
-import mkdntjr12_bybit1
+# import mkdntjr12_bybit1
 import pandas as pd
 import balance as bl
 import order
@@ -10,7 +10,7 @@ import rsi
 import math
 
 
-client = bybit.bybit(test=False, api_key=mkdntjr12_bybit1.api_key, api_secret=mkdntjr12_bybit1.secret_key)
+client = bybit.bybit(test=False, api_key="Ny2IKnIE8QuRYRSrlG", api_secret="a1ULO7ygdDG9kYXDtz2MkAaTPdcWr7SwEXum")
 # info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 거래되는 모든 거래쌍에 대한 현재 정보를 가져오는 것 keys 에 info 를 넣고 for i 문을 통해 안에 뭐가 들어있는지 확인이 가능함
 
 '''
