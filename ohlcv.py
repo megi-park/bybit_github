@@ -65,7 +65,7 @@ def ohlcv():
 
 
     # now_sec = dt.datetime.fromtimestamp(int(float(time[0]["time_now"])))
-    print(now)
+    # print(now)
     print("ohlcv out 완료, 완료 시간 : {0}".format(now))
 
 
