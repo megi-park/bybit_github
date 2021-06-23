@@ -11,9 +11,9 @@ import math
 
 
 client = bybit.bybit(test=False, api_key="Ny2IKnIE8QuRYRSrlG", api_secret="a1ULO7ygdDG9kYXDtz2MkAaTPdcWr7SwEXum")
-# info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 거래되는 모든 거래쌍에 대한 현재 정보를 가져오는 것 keys 에 info 를 넣고 for i 문을 통해 안에 뭐가 들어있는지 확인이 가능함
+info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() # 마켓에서 거래되는 모든 거래쌍에 대한 현재 정보를 가져오는 것 keys 에 info 를 넣고 for i 문을 통해 안에 뭐가 들어있는지 확인이 가능함
 
-'''
+
 #로그인 이후 간단한 정보 기입, 24시간 관련 정보 기입 필요
 print("로그인")
 # print("BTCUSD 이번 펀딩 rate : {0}%".format(100*float(info[0]["result"][0]["funding_rate"])))
@@ -50,7 +50,7 @@ KST_myposi = position[9]
 time_delta = position[10]
 print("시장 : {0} , 공매수/공매도 : {1} , 계약 수량 : {2} , 레버리지 : {3} , 격리(T)/교차(F) : {4} , 진입가 : {5} , 청산 예상가 : {6} ".format(myposi_market,myposi_side,myposi_size,myposi_leverage,myposi_iso,myposi_ent_price,myposi_liq_price))
 print("진입 시간 : {0} , 보유 기간 : {1}시간 , 미실현 손익 : {2} , 실현 손익 : {3} ".format(KST_myposi,time_delta,myposi_unrealised_pnl,myposi_realised_pnl))
-
+'''
 
 #ohlcv data 가져오기
 df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
@@ -80,8 +80,12 @@ while True:
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
                 new_RSI = cur_RSI
                 print("10분 아직 안 지남")
+                ohlcv.ohlcv()
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
+                df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
+                df2 = rsi.rsi(df1,14)
+                df2 = df2.sort_values(by="open_time" , ascending=False)
                 new_RSI = df2.iloc[0]["RSI"] #마지막 새로운 RSI 값을 기입
                 print("새로운 RSI 값 : {0}".format(new_RSI))
 
@@ -115,8 +119,12 @@ while True:
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
                 new_RSI = cur_RSI
                 print("10분 아직 안 지남")
+                ohlcv.ohlcv()
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
+                df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
+                df2 = rsi.rsi(df1,14)
+                df2 = df2.sort_values(by="open_time" , ascending=False)
                 new_RSI = df2.iloc[0]["RSI"] #마지막 새로운 RSI 값을 기입
                 print("새로운 RSI 값 : {0}".format(new_RSI))
 
