@@ -76,16 +76,15 @@ while True:
     if cur_RSI <=21:
         while True:
             time.sleep(5)
+            df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
+            df2 = rsi.rsi(df1,14)
+            df2 = df2.sort_values(by="open_time" , ascending=False)
             new_time = df2.index[0]
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
                 new_RSI = cur_RSI
                 print("10분 아직 안 지남")
-                ohlcv.ohlcv()
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
-                df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
-                df2 = rsi.rsi(df1,14)
-                df2 = df2.sort_values(by="open_time" , ascending=False)
                 new_RSI = df2.iloc[0]["RSI"] #마지막 새로운 RSI 값을 기입
                 print("새로운 RSI 값 : {0}".format(new_RSI))
 
@@ -115,16 +114,15 @@ while True:
     elif cur_RSI >= 70:
         while True:
             time.sleep(5)
+            df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
+            df2 = rsi.rsi(df1,14)
+            df2 = df2.sort_values(by="open_time" , ascending=False)
             new_time = df2.index[0]
             if new_time == cur_time: #업데이트 되기 전까지는 그냥 pass
                 new_RSI = cur_RSI
                 print("10분 아직 안 지남")
-                ohlcv.ohlcv()
                 pass
             else: #업데이트 되면 else로 넘어가서 새로운 rsi 값을 가지게 됨
-                df1 = ohlcv.ohlcv() #ohlcv data 를 가져와 df1 에 저장
-                df2 = rsi.rsi(df1,14)
-                df2 = df2.sort_values(by="open_time" , ascending=False)
                 new_RSI = df2.iloc[0]["RSI"] #마지막 새로운 RSI 값을 기입
                 print("새로운 RSI 값 : {0}".format(new_RSI))
 
