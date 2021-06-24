@@ -90,24 +90,26 @@ while True:
 
             if new_RSI > 21:
                 if cur_side == "Buy":
-                    pass
+                    print("이미 {0} 상태로 포지션 변경 없음 While 문 break".format(cur_side))
+                    break
                 elif cur_side == "Sell": #포지션 변경 , 자기자본율 100%
                     #이 함수가 한 번에 체결이 안될 수 있으므로, 반복문을 통해 사용 해야 함. while true 와 break 사용 필요
                     info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() #현재 가격 정보를 가져오기 위한 info 함수 사용
                     last_price = info[0]["result"][0]["last_price"] #현재 가격에 대한 정보 가져오기
-                    cur_size = cur_size * 1 #자기 자본율 100% - 50일 경우 0.5 로 수정 필요
                     order.order("Buy",cur_size) #현재 가지고 있는 공매도 포지션 청산
                     avail_size = bl.balance("BTC")[2] #매도 이후 현재 가용자산 BTC 기준
-                    order_size = avail_size * float(last_price) * 0.99 #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
-                    order.order("Buy",order_size) #가용 자산 만큼 풀 매수
+                    avail_size = avail_size * 1 #현재 자기자본율의 100% 를 사용하겠다는 뜻 , 50% 라면 0.5로 수정 필요
+                    order_size = math.floor(avail_size * math.floor(float(last_price))*0.99) #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
+                    order.order("Buy",order_size) #가용 자산 만큼 풀 매수 이 때 위에서 버림으로 order_size 를 int 형으로 만들어줌
                     break
                 else:
                     #이 함수가 한 번에 체결이 안될 수 있으므로, 반복문을 통해 사용 해야 함. while true 와 break 사용 필요
                     info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() #현재 가격 정보를 가져오기 위한 info 함수 사용
                     last_price = info[0]["result"][0]["last_price"] #현재 가격에 대한 정보 가져오기
                     avail_size = bl.balance("BTC")[2] #현재 가용자산
-                    order_size = avail_size * float(last_price) * 0.99 #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
-                    order.order("Buy",order_size) #가용 자산 만큼 풀 매수
+                    avail_size = avail_size * 1 #현재 자기자본율의 100% 를 사용하겠다는 뜻 , 50% 라면 0.5로 수정 필요
+                    order_size = math.floor(avail_size * math.floor(float(last_price))*0.99) #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
+                    order.order("Buy",order_size) #가용 자산 만큼 풀 매수 이 때 위에서 버림으로 order_size 를 int 형으로 만들어줌
                     break
             else:
                 pass
@@ -128,24 +130,26 @@ while True:
 
             if new_RSI < 70:
                 if cur_side == "Sell":
-                    pass
+                    print("이미 {0} 상태로 포지션 변경 없음 While 문 break".format(cur_side))
+                    break
                 elif cur_side == "Buy": #포지션 변경 , 자기자본율 100%
                     #이 함수가 한 번에 체결이 안될 수 있으므로, 반복문을 통해 사용 해야 함. while true 와 break 사용 필요
                     info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() #현재 가격 정보를 가져오기 위한 info 함수 사용
                     last_price = info[0]["result"][0]["last_price"] #현재 가격에 대한 정보 가져오기
-                    cur_size = cur_size * 1 #자기 자본율 100% - 50일 경우 0.5 로 수정 필요
                     order.order("Sell",cur_size) #현재 가지고 있는 포지션 청산
                     avail_size = bl.balance("BTC")[2] #청산 이후 현재 가용자산 BTC 기준
-                    order_size = avail_size * float(last_price) * 0.99 #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
-                    order.order("Sell",order_size) #가용 자산 만큼 풀 매수
+                    avail_size = avail_size * 1 #현재 자기자본율의 100% 를 사용하겠다는 뜻 , 50% 라면 0.5로 수정 필요
+                    order_size = math.floor(avail_size * math.floor(float(last_price))*0.99) #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
+                    order.order("Sell",order_size) #가용 자산 만큼 풀 매수 이 때 위에서 버림으로 order_size 를 int 형으로 만들어줌
                     break
                 else:
                     #이 함수가 한 번에 체결이 안될 수 있으므로, 반복문을 통해 사용 해야 함. while true 와 break 사용 필요
                     info = client.Market.Market_symbolInfo(symbol="BTCUSD").result() #현재 가격 정보를 가져오기 위한 info 함수 사용
                     last_price = info[0]["result"][0]["last_price"] #현재 가격에 대한 정보 가져오기
                     avail_size = bl.balance("BTC")[2] #현재 가용자산 BTC 기준
-                    order_size = avail_size * float(last_price) * 0.99 #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
-                    order.order("Sell",order_size) #가용 자산 만큼 풀 매수
+                    avail_size = avail_size * 1 #현재 자기자본율의 100% 를 사용하겠다는 뜻 , 50% 라면 0.5로 수정 필요
+                    order_size = math.floor(avail_size * math.floor(float(last_price))*0.99) #order size 는 USD 기준으로 표기해야하니 avail_size(BTC) * last price USD/BTC 적용, 0.99% 는 수수료를 위해 1% 마진
+                    order.order("Sell",order_size) #가용 자산 만큼 풀 매수 이 때 위에서 버림으로 order_size 를 int 형으로 만들어줌
                     break
             else:
                 pass
